@@ -1,0 +1,9 @@
+applications:
+- disk_quota: 1024M
+  host: visualisationappmax
+  name: visualisationappmax
+  command: node app.js
+  path: .
+  domain: eu-gb.mybluemix.net
+  instances: 1
+  memory: 128M

@@ -1,0 +1,20 @@
+{
+	"name": "databasebluemixmax",
+	"version": "0.0.1",
+	"description": "Lien capteurs, Twilio, Base de données",
+	"scripts": {
+		"start": "node app.js"
+	},
+	"dependencies": {
+		"express": "4.12.x",
+		"cfenv": "1.0.x",
+		"ibm_db": "0.0.15",
+		"mqtt": "^1.1.2",
+    	"twilio": "^2.5.2",
+    	"body-parser": "1.14.x"
+	},
+	"repository": {},
+	"engines": {
+		"node": "0.12.x"
+	} 
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Raspi",
+  "version": "1.0.0",
+  "description": "Relai RTOS-Bluemix",
+  "main": "ble.js",
+  "repository" :  "Maxime",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "private": true,
+  "dependencies": {
+    "moment": "^2.9.0",
+    "mqtt": "^1.1.2",
+    "onoff": "1.0.3",
+    "noble": "1.2.1",
+    "ibmiotf":"0.1.1"
+  }
+}

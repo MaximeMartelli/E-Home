@@ -1,0 +1,133 @@
+extends layout
+
+block signout
+  a.logoutLblPos(href="/logout") Se connecter avec une nouvelle API/token
+block content 
+
+  link(rel='stylesheet', href='css/rickshaw/rickshaw.min.css')
+
+  link(rel='stylesheet', href='css/dashboard.css')
+  link(rel='stylesheet', href='css/extensions.css?v=2')
+  link(rel='stylesheet', href='http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css')
+  link(rel='stylesheet', href='css/jquery.datetimepicker.css')
+
+  script(type='text/javascript', src='js/d3/d3.v3.js')
+  script(type='text/javascript', src='js/rickshaw/rickshaw.min.js')
+  script(type='text/javascript', src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
+  script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js')
+  script(type='text/javascript', src='js/jquery.datetimepicker.min.js')
+  script(type='text/javascript',src='js/rickshaw/extensions.js')
+  
+  script
+    |$(function() {
+    |$( "#historicStarts" ).datetimepicker({ onShow:function( ct ){
+    |     this.setOptions({ maxDate: new Date() })
+    | }});
+    |$( "#historicEnds" ).datetimepicker({ maxDate: new Date()});
+    |$( "#historicTopRange").spinner({min : 0, max : 100, step : 1})
+    |.on('input', function () {
+    |var val = this.value,
+    |$this = $(this),
+    |max = $this.spinner('option', 'max'),
+    |min = $this.spinner('option', 'min');
+    |if (!val.match(/^\d+$/)) 
+    |val = 0;
+    |this.value = val > max ? max : val < min ? min : val;
+    |});
+    |$( "#historicTopRange").spinner("value",10); // set the default to 10
+    |});
+
+  h2.iottext
+  #content
+  form#side_panel.iotsidepanel
+    div.devices
+      h1.devicesText Terminal:
+      select.devicesSelect#deviceslist
+        option(value='') Choisir un terminal
+    h1.iottext Données
+    section
+      #visualtype
+        input#realtime(type='radio', value='realtime', name='visualtype', checked="")
+        label.iotlabel(for="realtime") Temps réel
+        input#historic(type='radio', value='historic', name='visualtype')
+        label.iotlabel(for="historic") Historiques
+
+        #historicData(hidden)
+          section
+            input#historicRecentEvents(type='radio', value='topEvents', name='historicQuery', checked="")
+            label.iotlabel(for="historicRecentEvents") Récents
+            input.spinner#historicTopRange
+            label.iottext(for="historicTopRange") Évènements
+            input#historicDateRange(type='radio', value='dateRange', name='historicQuery')
+            label.iotlabel(for="historicRecentEvents") Période
+            //label.iotlabelleft(for="historicStarts") Starts
+            input.histdate#historicStarts(type='text', placeholder='Commence')
+            //label.iotlabelleft(for="historicEnds") Ends
+            input.histdate#historicEnds(type='text', placeholder='Termine')
+            br
+            br
+
+    h1.iottext Capteurs
+    section
+      #legend
+    h1.iottext Type de graphique
+    section
+      #renderer_form.toggler
+        input#area(type="radio", name="renderer", value="area")
+        label(for="area") aire
+        input#bar(type="radio", name="renderer", value="bar")
+        label(for="bar") barre
+        input#line(type="radio", name="renderer", value="line", checked="")
+        label(for="line") lignes
+        input#scatter(type="radio", name="renderer", value="scatterplot")
+        label(for="scatter") points
+    h1.iottext Configuration avancée
+    section
+      #offset_form.iotoptionpanel
+        label(for="stack")
+          input#stack(type="radio", name="offset", value="zero")
+          span Pile
+        label(for="stream")
+          input#stream(type="radio", name="offset", value="wiggle")
+          span Flot
+        label(for="pct")
+          input#pct(type="radio", name="offset", value="expand")
+          span %
+        label(for="value")
+          input#value(type="radio", name="offset", value="value", checked="")
+          span Valeur
+      #interpolation_form.iotoptionpanel
+        label(for="cardinal")
+          input#cardinal(type="radio", name="interpolation", value="cardinal", checked="")
+          span Lissé
+        label(for="linear")
+          input#linear(type="radio", name="interpolation", value="linear")
+          span Linéaire
+        label(for="step")
+          input#step(type="radio", name="interpolation", value="step-after")
+          span Échelon
+        label(for="hidd")
+          input#hidd(type="radio", name="interpolation", value="", hidden="true")
+          span
+      
+    
+  #chart_container
+    #chart
+      .iotdashboardtext Tous les terminaux de l'organisation sont accessibles dans la liste des terminaux.
+      br
+      .iotdashboardtext En choisir un pour commencer à visualiser ses données.
+      img.iotimages(src='images/quickstartThing.jpg', alt='Thing',align="middle")
+      img.iotimages(src='images/quickstartChart.svg', alt='Chart',align="middle")
+    #timeline
+    #preview
+    
+  #chart_container
+      .iotdashboardtext © 2015-2019 Maxime MARTELLI Lounes ACHAB Afshin KHALGHDOOST Matthieu BOULANGER        
+    #preview
+    
+  script(type='text/javascript', src='js/realtime/mqttws31.js')
+  script(type='text/javascript', src='js/realtime/realtime.js')
+  script(type='text/javascript', src='js/realtime/realtimeGraph.js')
+  script(type='text/javascript', src='js/historian/historian.js')
+  script(type='text/javascript', src='js/historian/historianGraph.js')
+  script(type='text/javascript', src='js/uicontroller.js')
